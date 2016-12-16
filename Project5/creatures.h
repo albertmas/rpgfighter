@@ -4,7 +4,10 @@
 // find here the manin data structure for the game
 // feel free to expand it to suit your improvements
 
-bool wave_is_on;
+bool wave_is_on()
+{
+	return true;
+}
 
 struct combat_data
 {
