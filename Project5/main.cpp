@@ -56,7 +56,7 @@ int main()
 		struct monster_data* goblins = (struct monster_data*)malloc(goblin_amount * sizeof(struct monster_data));
 		for (i = 0; i < goblin_amount; i++)
 		{
-			goblins[i].combat.hp = 50; //40 + rand() % 21;
+			goblins[i].combat.hp = 40 + rand() % 21;
 			goblins[i].combat.attack_min = 10;
 			goblins[i].combat.attack_max = 20;
 			goblins[i].combat.armor = 5;
@@ -82,71 +82,53 @@ int main()
 
 				goblins[hero_target].combat.hp -= hero_damage;
 
-				printf_s("You have %d HP left. You hit the goblin #%d for %d!\n", hero.combat.hp, hero_target + 1, hero_damage);
+				printf_s("\nYou have %d HP left. You hit the goblin #%d for %d!\n", hero.combat.hp, hero_target + 1, hero_damage);
 
 				if (goblins[hero_target].combat.hp <= 0)
 				{
 					remaining_goblins -= 1;
 					hero.coins += goblins[hero_target].coins;
 					hero.xp += goblins[hero_target].xp;
-					printf_s("%d Remaining goblins\n", remaining_goblins);
+					printf_s("%d Remaining goblins\n\n", remaining_goblins);
 				}
-				if (goblins[hero_target].combat.hp > 0)
+
+				for (int j = 0; j < goblin_amount; j++)
 				{
-					goblin_attack = goblins[hero_target].combat.attack_min + rand() % (goblins[hero_target].combat.attack_max - goblins[hero_target].combat.attack_min);
-					goblin_damage = goblin_attack - hero.combat.armor;
-					if (goblin_damage < 0) //It ensures that (when the damage dealt by the goblin is smaller than the armor) the hero doesn't heal.
+					if (goblins[j].combat.hp > 0)
 					{
-						goblin_damage = 0;
+						goblin_attack = goblins[j].combat.attack_min + rand() % (goblins[j].combat.attack_max - goblins[j].combat.attack_min);
+						goblin_damage = goblin_attack - hero.combat.armor;
+						if (goblin_damage < 0) //It ensures that (when the damage dealt by the goblin is smaller than the armor) the hero doesn't heal.
+						{
+							goblin_damage = 0;
+						}
+						if (goblin_damage > hero.combat.hp) //Maximum goblin damage = heroe's reamining HP
+						{
+							goblin_damage = hero.combat.hp;
+						}
+
+						hero.combat.hp -= goblin_damage;
+
+						printf_s("Goblin #%d hits you for %d!\n", j + 1, goblin_damage);
 					}
-					if (goblin_damage > hero.combat.hp) //Maximum goblin damage = heroe's reamining HP
+
+					if (hero.combat.hp == 0)
 					{
-						goblin_damage = hero.combat.hp;
+						break;
 					}
-					hero.combat.hp -= goblin_damage;
-					printf_s("Goblin #%d hits you for %d!\n", hero_target + 1, goblin_damage);
 				}
-			}				
-				
+				if (hero.combat.hp == 0)
+				{
+					break;
+				}
+			}
+
 			if (hero.combat.hp == 0)
 			{
 				break;
 			}
 		}
 
-
-
-
-			/*for (int j = 0; j < goblin_amount; j++)
-			{
-				if (goblins[j].combat.hp > 0)
-				{
-					goblin_attack = goblins[j].combat.attack_min + rand() % (goblins[j].combat.attack_max - goblins[j].combat.attack_min);
-					goblin_damage = goblin_attack - hero.combat.armor;
-					if (goblin_damage < 0) //It ensures that (when the damage dealt by the goblin is smaller than the armor) the hero doesn't heal.
-					{
-						goblin_damage = 0;
-					}
-					if (goblin_damage > hero.combat.hp) //Maximum goblin damage = heroe's reamining HP
-					{
-						goblin_damage = hero.combat.hp;
-					}
-
-					hero.combat.hp -= goblin_damage;
-
-					printf_s("Goblin #%d hits you for %d!\n", j + 1, goblin_damage);
-				}
-
-				if (hero.combat.hp <= 0)
-				{
-					break;
-				}
-			}
-			if (hero.combat.hp == 0)
-			{
-				break;
-			}*/
-		
 		free(goblins);
 
 		++w;
