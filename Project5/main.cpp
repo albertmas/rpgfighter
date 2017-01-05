@@ -82,7 +82,7 @@ int main()
 				
 				goblins[hero_target].combat.hp -= hero_damage;
 
-				printf_s("You have %d HP left. You hit the goblin #%d for %d!\n", hero.combat.hp, hero_target + 1, hero_attack);
+				printf_s("You have %d HP left. You hit the goblin #%d for %d!\n", hero.combat.hp, hero_target + 1, hero_damage);
 
 				if (goblins[hero_target].combat.hp <= 0)
 				{
