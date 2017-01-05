@@ -113,6 +113,39 @@ int main()
 				break;
 			}
 		}
+
+
+
+
+			/*for (int j = 0; j < goblin_amount; j++)
+			{
+				if (goblins[j].combat.hp > 0)
+				{
+					goblin_attack = goblins[j].combat.attack_min + rand() % (goblins[j].combat.attack_max - goblins[j].combat.attack_min);
+					goblin_damage = goblin_attack - hero.combat.armor;
+					if (goblin_damage < 0) //It ensures that (when the damage dealt by the goblin is smaller than the armor) the hero doesn't heal.
+					{
+						goblin_damage = 0;
+					}
+					if (goblin_damage > hero.combat.hp) //Maximum goblin damage = heroe's reamining HP
+					{
+						goblin_damage = hero.combat.hp;
+					}
+
+					hero.combat.hp -= goblin_damage;
+
+					printf_s("Goblin #%d hits you for %d!\n", j + 1, goblin_damage);
+				}
+
+				if (hero.combat.hp <= 0)
+				{
+					break;
+				}
+			}
+			if (hero.combat.hp == 0)
+			{
+				break;
+			}*/
 		
 		free(goblins);
 
